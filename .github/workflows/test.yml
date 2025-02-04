@@ -1,0 +1,52 @@
+name: Test
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  Test:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Add msbuild to PATH
+        if: matrix.os == 'windows-latest'
+        uses: microsoft/setup-msbuild@v2
+
+      - name: Build
+        shell: bash
+        run: |
+          mkdir -p build
+          case "$RUNNER_OS" in
+            "Windows")
+              # MSVC compiler (cl.exe) on Windows
+              cl /EHsc /std:c++11 /W4 /Fe:build\\main.exe CIS25-Project-1\\main.cpp
+              ;;
+            "macOS")
+              # Clang compiler on macOS
+              clang++ -std=c++11 -o build/main CIS25-Project-1/main.cpp
+              ;;
+            "Linux")
+              # GCC compiler on Ubuntu
+              g++ -std=c++11 -o build/main CIS25-Project-1/main.cpp
+              ;;
+          esac
+  
+      - name: Test
+        shell: bash
+        run: |
+          case "$RUNNER_OS" in
+            "Windows")
+              ./build/main.exe
+              ;;
+            *)
+              ./build/main
+              ;;
+          esac
