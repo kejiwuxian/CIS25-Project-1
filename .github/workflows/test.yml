@@ -16,9 +16,9 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      - name: Add msbuild to PATH
+      - name: Add MSVC to PATH
         if: matrix.os == 'windows-latest'
-        uses: microsoft/setup-msbuild@v2
+        uses: ilammy/msvc-dev-cmd@release/v1
 
       - name: Build
         shell: bash
