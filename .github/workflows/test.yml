@@ -27,7 +27,7 @@ jobs:
           case "$RUNNER_OS" in
             "Windows")
               # MSVC compiler (cl.exe) on Windows
-              cl /EHsc /std:c++11 /W4 /Fe:build\\main.exe CIS25-Project-1\\main.cpp
+              cl -EHsc -W4 -Fe:build\\main.exe CIS25-Project-1\\main.cpp
               ;;
             "macOS")
               # Clang compiler on macOS
