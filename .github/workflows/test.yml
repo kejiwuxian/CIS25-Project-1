@@ -27,15 +27,15 @@ jobs:
           case "$RUNNER_OS" in
             "Windows")
               # MSVC compiler (cl.exe) on Windows
-              cl -EHsc -W4 -Fe:build\\main.exe CIS25-Project-1\\main.cpp
+              cl -EHsc -W4 -Fe:build\\main.exe CIS25-Project-1\\*.cpp
               ;;
             "macOS")
               # Clang compiler on macOS
-              clang++ -std=c++11 -o build/main CIS25-Project-1/main.cpp
+              clang++ -std=c++11 -o build/main CIS25-Project-1/*.cpp
               ;;
             "Linux")
               # GCC compiler on Ubuntu
-              g++ -std=c++11 -o build/main CIS25-Project-1/main.cpp
+              g++ -std=c++11 -o build/main CIS25-Project-1/*.cpp
               ;;
           esac
   
@@ -44,9 +44,9 @@ jobs:
         run: |
           case "$RUNNER_OS" in
             "Windows")
-              ./build/main.exe
+              (echo usd & echo lb & echo 1) | ./build/main.exe
               ;;
             *)
-              ./build/main
+              (echo usd & echo lb & echo 1) | ./build/main
               ;;
           esac
