@@ -42,11 +42,14 @@ jobs:
       - name: Test
         shell: bash
         run: |
+          echo usd > stdin.txt
+          echo lb >> stdin.txt
+          echo 1 >> stdin.txt
           case "$RUNNER_OS" in
             "Windows")
-              (echo usd & echo lb & echo 1) | ./build/main.exe
+              ./build/main.exe < stdin.txt
               ;;
             *)
-              (echo usd & echo lb & echo 1) | ./build/main
+              ./build/main < stdin.txt
               ;;
           esac
